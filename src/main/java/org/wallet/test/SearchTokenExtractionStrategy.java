@@ -17,5 +17,5 @@ public interface SearchTokenExtractionStrategy {
 	 *            duration enumeration, this can be hours, days etc.
 	 * @return search String to scan the source file.
 	 */
-	String extractSearchToken(String startTime, Duration duration);
+	String extractSearchToken(String startTime, DurationEnum duration);
 }

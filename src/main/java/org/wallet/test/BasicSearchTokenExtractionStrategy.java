@@ -23,7 +23,7 @@ public class BasicSearchTokenExtractionStrategy implements SearchTokenExtraction
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String extractSearchToken(String startTime, Duration duration) {
+	public String extractSearchToken(String startTime, DurationEnum duration) {
 		String searchToken = null;
 		List<String> dateTimeTokens = Arrays.asList(startTime.split(ESCAPE_CHAR + delimiter));
 		switch (duration) {

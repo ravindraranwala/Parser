@@ -1,5 +1,5 @@
 package org.wallet.test;
 
-public enum Duration {
+public enum DurationEnum {
 	HOURLY, DAILY
 }
