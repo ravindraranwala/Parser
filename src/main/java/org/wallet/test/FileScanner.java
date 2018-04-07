@@ -63,7 +63,7 @@ public class FileScanner {
 			entriesByIp.entrySet().stream().filter(entry -> entry.getValue() > threshold).forEach(System.out::println);
 			logDataProcessor.processData(logEntries);
 		} catch (IOException e) {
-			LOGGER.error("An ERROR occurred while reading the file.");
+			LOGGER.error("An ERROR occurred while reading the file.", e);
 			throw new RuntimeException(e);
 		}
 	}

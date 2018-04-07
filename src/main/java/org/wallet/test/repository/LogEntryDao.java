@@ -4,9 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wallet.test.model.LogEntry;
 
 public class LogEntryDao {
@@ -16,12 +17,14 @@ public class LogEntryDao {
 	private static final String JDBC_USER = "root";
 	private static final String JDBC_PASS = "mysql";
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(LogEntryDao.class);
+
 	public void saveLogEntried(List<LogEntry> entries) {
 		try (Connection connObj = DriverManager.getConnection(JDBC_DB_URL, JDBC_USER, JDBC_PASS);
-				Statement stmtObj = connObj.createStatement()) {
+				// Statement stmtObj = connObj.createStatement();
+				PreparedStatement prepareStatement = connObj
+						.prepareStatement("INSERT INTO logentry (date, ip, request) values(?, ?,?)")) {
 			connObj.setAutoCommit(false);
-			PreparedStatement prepareStatement = connObj
-					.prepareStatement("INSERT INTO logentry (date, ip, request) values(?, ?,?)");
 			entries.forEach(entry -> {
 				try {
 					// stmtObj.addBatch("INSERT INTO logentry (date, ip, request) values('" +
@@ -32,15 +35,15 @@ public class LogEntryDao {
 					prepareStatement.setString(3, entry.getRequest());
 					prepareStatement.addBatch();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					LOGGER.error("Error occurred while inserting data in to the Database", e);
 				}
 			});
 
 			// stmtObj.executeBatch();
 			prepareStatement.executeBatch();
 			connObj.commit();
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while inserting data in to the Database", e);
 		}
 	}
 }
