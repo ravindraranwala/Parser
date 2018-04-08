@@ -4,15 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wallet.model.LogEntry;
 import org.wallet.processor.LogDataProcessor;
 import org.wallet.processor.LogDataProcessorFactory;
 
@@ -24,8 +21,6 @@ import org.wallet.processor.LogDataProcessorFactory;
  *
  */
 public class FileScanner {
-	private static final String SPLIT_PATTERN = "\\|";
-
 	private static Logger LOGGER = LoggerFactory.getLogger(FileScanner.class);
 
 	private final SearchTokenExtractionStrategy searchTokenExtractionStrategy;
@@ -50,18 +45,13 @@ public class FileScanner {
 	 */
 	public void search(final String startDate, final DurationEnum duration, final int threshold) {
 		final LogDataProcessor logDataProcessor = LogDataProcessorFactory.getInstance().makeLogDataProcessor();
-		final List<LogEntry> logEntries = new ArrayList<>();
+		logDataProcessor.processData(this.sourceFilePath);
 		final String searchToken = this.searchTokenExtractionStrategy.extractSearchToken(startDate, duration);
 		final Path logFile = Paths.get(this.sourceFilePath);
 		try (Stream<String> stream = Files.lines(logFile)) {
-			final Map<String, Long> entriesByIp = stream.filter(line -> {
-				String[] split = line.split(SPLIT_PATTERN);
-				// Collecting log entries for saving here.
-				logEntries.add(new LogEntry(split[0], split[1], split[2].replaceAll("\"", "")));
-				return line.contains(searchToken);
-			}).collect(Collectors.groupingBy(l -> l.split(SPLIT_PATTERN)[1], Collectors.counting()));
+			final Map<String, Long> entriesByIp = stream.filter(line -> line.contains(searchToken))
+					.collect(Collectors.groupingBy(l -> l.split(AppConstants.SPLIT_PATTERN)[1], Collectors.counting()));
 			entriesByIp.entrySet().stream().filter(entry -> entry.getValue() > threshold).forEach(System.out::println);
-			logDataProcessor.processData(logEntries);
 		} catch (IOException e) {
 			LOGGER.error("An ERROR occurred while reading the file.", e);
 			throw new RuntimeException(e);
