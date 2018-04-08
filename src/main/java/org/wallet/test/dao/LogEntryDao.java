@@ -1,10 +1,11 @@
-package org.wallet.test.repository;
+package org.wallet.test.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +13,21 @@ import org.wallet.test.model.LogEntry;
 
 public class LogEntryDao {
 	// JDBC Driver Name & Database URL
-	private static final String JDBC_DB_URL = "jdbc:mysql://localhost:3307/logservice";
+	private final String JDBC_DB_URL;
 	// JDBC Database Credentials
-	private static final String JDBC_USER = "root";
-	private static final String JDBC_PASS = "mysql";
+	private final String JDBC_USER;
+	private final String JDBC_PASS;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(LogEntryDao.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(LogEntryDao.class);
+
+	private static LogEntryDao instance;
+
+	private LogEntryDao() {
+		ResourceBundle rb = ResourceBundle.getBundle("config");
+		JDBC_DB_URL = rb.getString("jdbc.url");
+		JDBC_USER = rb.getString("jdbc.username");
+		JDBC_PASS = rb.getString("jdbc.password");
+	}
 
 	public void saveLogEntried(List<LogEntry> entries) {
 		try (Connection connObj = DriverManager.getConnection(JDBC_DB_URL, JDBC_USER, JDBC_PASS);
@@ -45,5 +55,12 @@ public class LogEntryDao {
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while inserting data in to the Database", e);
 		}
+	}
+
+	public static LogEntryDao getInstance() {
+		if (instance == null) {
+			instance = new LogEntryDao();
+		}
+		return instance;
 	}
 }
