@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.wallet.test.model.LogEntry;
 
 public class LogEntryDao {
-	// JDBC Driver Name & Database URL
+	// JDBC Database URL
 	private final String JDBC_DB_URL;
 	// JDBC Database Credentials
 	private final String JDBC_USER;
@@ -29,6 +29,12 @@ public class LogEntryDao {
 		JDBC_PASS = rb.getString("jdbc.password");
 	}
 
+	/**
+	 * Inserts the log data into the given relational DB.
+	 * 
+	 * @param entries
+	 *            log data to be inserted.
+	 */
 	public void saveLogEntried(List<LogEntry> entries) {
 		try (Connection connObj = DriverManager.getConnection(JDBC_DB_URL, JDBC_USER, JDBC_PASS);
 				// Statement stmtObj = connObj.createStatement();
@@ -57,6 +63,11 @@ public class LogEntryDao {
 		}
 	}
 
+	/**
+	 * Returns a singleton instance of the DAO.
+	 * 
+	 * @return a singleton instance of the DAO.
+	 */
 	public static LogEntryDao getInstance() {
 		if (instance == null) {
 			instance = new LogEntryDao();
