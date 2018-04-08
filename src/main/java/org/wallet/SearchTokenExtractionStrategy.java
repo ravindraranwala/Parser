@@ -1,4 +1,4 @@
-package org.wallet.test;
+package org.wallet;
 
 /**
  * Defines the contract to extract a search token from a given starting time.

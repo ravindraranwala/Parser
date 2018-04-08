@@ -1,4 +1,4 @@
-package org.wallet.test;
+package org.wallet;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wallet.test.model.LogEntry;
-import org.wallet.test.processor.LogDataProcessor;
-import org.wallet.test.processor.LogDataProcessorFactory;
+import org.wallet.model.LogEntry;
+import org.wallet.processor.LogDataProcessor;
+import org.wallet.processor.LogDataProcessorFactory;
 
 /**
  * Scans the file using a token obtained via provided

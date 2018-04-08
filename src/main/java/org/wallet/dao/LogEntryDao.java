@@ -1,4 +1,4 @@
-package org.wallet.test.dao;
+package org.wallet.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wallet.test.model.LogEntry;
+import org.wallet.model.LogEntry;
 
 public class LogEntryDao {
 	// JDBC Database URL

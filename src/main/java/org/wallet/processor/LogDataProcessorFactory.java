@@ -1,4 +1,4 @@
-package org.wallet.test.processor;
+package org.wallet.processor;
 
 public class LogDataProcessorFactory {
 	private static LogDataProcessorFactory instance;

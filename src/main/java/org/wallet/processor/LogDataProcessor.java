@@ -1,8 +1,8 @@
-package org.wallet.test.processor;
+package org.wallet.processor;
 
 import java.util.List;
 
-import org.wallet.test.model.LogEntry;
+import org.wallet.model.LogEntry;
 
 public interface LogDataProcessor {
 	void processData(List<LogEntry> logEntries);

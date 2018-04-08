@@ -1,4 +1,4 @@
-package org.wallet.test;
+package org.wallet;
 
 import java.util.Arrays;
 import java.util.List;

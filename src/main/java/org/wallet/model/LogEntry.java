@@ -1,4 +1,4 @@
-package org.wallet.test.model;
+package org.wallet.model;
 
 public class LogEntry {
 	private final String date;

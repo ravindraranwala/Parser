@@ -1,4 +1,4 @@
-package org.wallet.test;
+package org.wallet;
 
 import java.time.Duration;
 import java.time.Instant;

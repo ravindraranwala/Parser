@@ -1,9 +1,9 @@
-package org.wallet.test.processor;
+package org.wallet.processor;
 
 import java.util.List;
 
-import org.wallet.test.dao.LogEntryDao;
-import org.wallet.test.model.LogEntry;
+import org.wallet.dao.LogEntryDao;
+import org.wallet.model.LogEntry;
 
 public class LogDataProcessorRelationalDb implements LogDataProcessor {
 	private final LogEntryDao logEntryDao;
