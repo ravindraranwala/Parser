@@ -7,7 +7,7 @@ public class App {
 	public static void main(String[] args) {
 		final Instant start = Instant.now();
 		new FileScanner(new BasicSearchTokenExtractionStrategy("."), "./src/main/resources/access.log")
-				.search("2017-01-01.00:00:00", DurationEnum.DAILY, 500);
+				.search("2017-01-01.15:00:00", DurationEnum.HOURLY, 200);
 		final Instant end = Instant.now();
 		System.out.println("Execution time in msec: " + Duration.between(start, end).toMillis());
 	}
